@@ -18,6 +18,8 @@ import {
   SmartphoneIcon,
 } from "@/components/Icons";
 import { Navbar } from "@/components/Navbar";
+import { VideoDemoSection } from "@/components/VideoDemoSection";
+import { DEMO_VIDEO_CONFIG } from "@/data/rudalppk";
 
 export default function HomePage() {
   return (
@@ -258,12 +260,29 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* SECTION 3: SIMULASI INTERAKTIF PERISAI-LAB & SIGN */}
+        {/* SECTION 3: VIDEO DEMONSTRASI YOUTUBE */}
+        <section id="video-demo" className="border-b border-slate-800/70 py-14 sm:py-16">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-8 max-w-3xl">
+              <span className="font-mono text-xs font-semibold uppercase tracking-widest text-emerald-400">
+                03 // {DEMO_VIDEO_CONFIG.badge}
+              </span>
+              <h2 className="mt-1.5 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
+                {DEMO_VIDEO_CONFIG.title}
+              </h2>
+              <p className="mt-2 text-sm leading-relaxed text-slate-300">{DEMO_VIDEO_CONFIG.description}</p>
+            </div>
+
+            <VideoDemoSection />
+          </div>
+        </section>
+
+        {/* SECTION 4: SIMULASI INTERAKTIF PERISAI-LAB & SIGN */}
         <section id="simulasi" className="py-14 sm:py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-8">
               <span className="font-mono text-xs font-semibold uppercase tracking-widest text-emerald-400">
-                03 // DEMONSTRASI INTERAKTIF PERISAI-Q
+                04 // DEMONSTRASI INTERAKTIF PERISAI-Q
               </span>
               <h2 className="mt-1.5 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
                 Simulasi PERISAI-Lab (Shor RSA) &amp; PERISAI-Sign (ML-DSA)
@@ -274,12 +293,12 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* SECTION 4: HASIL VERIFIKASI & UJI OTOMATIS */}
+        {/* SECTION 5: HASIL VERIFIKASI & UJI OTOMATIS */}
         <section id="benchmark" className="border-y border-slate-800/70 bg-[#080d14]/70 py-14 sm:py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-8">
               <span className="font-mono text-xs font-semibold uppercase tracking-widest text-emerald-400">
-                04 // HASIL PENGUJIAN &amp; SPESIFIKASI PQC
+                05 // HASIL PENGUJIAN &amp; SPESIFIKASI PQC
               </span>
               <h2 className="mt-1.5 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
                 105 Pemeriksaan Otomatis Lulus
@@ -290,12 +309,12 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* SECTION 5: MANFAAT DWIGUNA & STACK TEKNOLOGI */}
+        {/* SECTION 6: MANFAAT DWIGUNA & STACK TEKNOLOGI */}
         <section id="dwiguna" className="py-14 sm:py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-8">
               <span className="font-mono text-xs font-semibold uppercase tracking-widest text-emerald-400">
-                05 // KAPABILITAS &amp; STACK TEKNOLOGI
+                06 // KAPABILITAS &amp; STACK TEKNOLOGI
               </span>
               <h2 className="mt-1.5 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
                 Operasi Lapangan, Konsol Organisasi &amp; Audit PQC
@@ -367,13 +386,13 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* SECTION 6: PUSAT UNDUHAN APLIKASI */}
+        {/* SECTION 7: PUSAT UNDUHAN APLIKASI */}
         <section id="download" className="border-t border-slate-800/80 bg-[#070c12] py-16 sm:py-20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <div>
                 <span className="font-mono text-xs font-semibold uppercase tracking-widest text-emerald-400">
-                  06 // UNDUH KOMPONEN RUDALPPK
+                  07 // UNDUH KOMPONEN RUDALPPK
                 </span>
                 <h2 className="mt-1.5 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
                   Unduh Aplikasi Klien, Konsol Web &amp; Backend Python

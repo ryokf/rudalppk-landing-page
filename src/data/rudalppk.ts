@@ -254,3 +254,33 @@ export const SIGN_VERIFY_JSON_PREVIEW = `{
     "content_hash_sha256": "8f3c91d2e7a40519c6b12f90e84d3a7c119e5b24d07a6c83f120e49b7d6c5a21"
   }
 }`;
+
+// ============================================================================
+// KONFIGURASI VIDEO DEMO YOUTUBE
+// Ganti `youtubeUrlOrId` dengan URL YouTube (watch / youtu.be / embed) atau
+// langsung 11 karakter Video ID milik Anda sendiri.
+// ============================================================================
+export const DEMO_VIDEO_CONFIG = {
+  youtubeUrlOrId: "https://www.youtube.com/watch?v=AQDCe585Lnc",
+  badge: "VIDEO DEMONSTRASI // RUDALPPK & PERISAI-Q",
+  title: "Tonton Alur Kerja Lengkap Sistem RUDALPPK",
+  description:
+    "Cuplikan demonstrasi end-to-end mulai dari menyalakan backend Python 3.12 (FastAPI + Docker), penerbitan kode aktivasi di Organization Web Console, chat E2EE pasca-kuantum di Flutter Field Client, hingga tanda tangan ML-DSA & simulasi Shor di PERISAI-Lab.",
+  highlights: [
+    {
+      time: "01",
+      title: "Provisioning & Aktivasi 72 Jam",
+      detail: "Admin membuat akun agen di Organization Web Console & menerbitkan kode aktivasi sekali pakai.",
+    },
+    {
+      time: "02",
+      title: "Obrolan E2EE Hybrid Envelope v2",
+      detail: "Pertukaran kunci X25519 + ML-KEM-(512/768/1024) di aplikasi Flutter dengan 12-word recovery phrase.",
+    },
+    {
+      time: "03",
+      title: "PERISAI-Sign & PERISAI-Lab",
+      detail: "Verifikasi instruksi komando ML-DSA-65 dan simulasi serangan kuantum Shor RSA vs PQC.",
+    },
+  ],
+};

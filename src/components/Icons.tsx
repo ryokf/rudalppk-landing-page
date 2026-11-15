@@ -184,3 +184,18 @@ export function BookDocsIcon(props: IconProps) {
     </svg>
   );
 }
+
+export function PlayVideoIcon(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
+      <rect x="2.5" y="4.5" width="19" height="15" rx="3" stroke="currentColor" strokeWidth="1.8" />
+      <path
+        d="M10 9l5.5 3-5.5 3V9z"
+        fill="currentColor"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}

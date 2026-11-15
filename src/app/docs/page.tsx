@@ -22,8 +22,8 @@ export const metadata: Metadata = {
 
 const QUICK_LINKS = [
   { href: "#prasyarat", label: "01. Prasyarat Sistem" },
-  { href: "#backend", label: "02. Jalankan Backend (Docker)" },
-  { href: "#org-console", label: "03. Organization Web Console" },
+  { href: "#backend", label: "02. Backend Python (FastAPI)" },
+  { href: "#org-console", label: "03. Web Konsol Organisasi" },
   { href: "#flutter-client", label: "04. Flutter Field Client" },
   { href: "#pqc-switch", label: "05. Mode PQC (custom vs pqcrypto)" },
   { href: "#pengujian", label: "06. Menjalankan 105 Uji Otomatis" },
@@ -152,72 +152,289 @@ export default function DocsPage() {
               </section>
 
               {/* 02. Backend */}
-              <section id="backend" className="glass-panel rounded-2xl p-6 scroll-mt-24 space-y-4">
+              <section id="backend" className="glass-panel rounded-2xl p-6 scroll-mt-24 space-y-6">
                 <div className="flex items-start gap-3">
                   <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-emerald-400/35 bg-emerald-500/10 text-emerald-400">
                     <ServerStackIcon className="h-5 w-5" />
                   </span>
                   <div>
                     <span className="font-mono text-xs font-bold text-emerald-400">02 // PYTHON 3.12 BACKEND (FASTAPI)</span>
-                    <h2 className="text-xl font-bold text-white">Jalankan Backend Python (Docker / Uvicorn)</h2>
+                    <h2 className="text-xl font-bold text-white">Panduan Menjalankan Backend Python</h2>
                     <p className="mt-1 text-sm text-slate-300">
-                      Backend dibangun dengan <strong className="text-white">Python 3.12 (FastAPI + Uvicorn + SQLAlchemy async)</strong>{" "}
-                      dan berjalan di <code className="text-emerald-300">http://localhost:8000</code> bersama PostgreSQL 16 &amp; SeaweedFS.
+                      Backend RUDALPPK dibangun dengan <strong className="text-white">Python 3.12 (FastAPI + SQLAlchemy Async + Uvicorn)</strong>{" "}
+                      didukung basis data <strong className="text-white">PostgreSQL 16</strong> dan kluster penyimpanan objek{" "}
+                      <strong className="text-white">SeaweedFS S3</strong>.
                     </p>
                   </div>
                 </div>
 
-                <CopyableCodeBlock
-                  title="Opsi A: Docker Compose (Direkomendasikan)"
-                  code={`cd MobileApp_and_Web/Backend
-docker compose up --build -d
-docker compose logs -f api`}
-                />
+                {/* Arsitektur Stack 3 Container */}
+                <div className="grid gap-3 sm:grid-cols-3">
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3.5">
+                    <div className="flex items-center gap-2 font-mono text-xs font-bold text-emerald-300">
+                      <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                      <span>securechat-api</span>
+                    </div>
+                    <div className="mt-1 text-xs text-slate-400">
+                      Port <code className="text-slate-200">8000</code>: REST API 14 router, WebSocket relai, &amp; Swagger UI di <code className="text-slate-200">/docs</code>.
+                    </div>
+                  </div>
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3.5">
+                    <div className="flex items-center gap-2 font-mono text-xs font-bold text-sky-300">
+                      <span className="h-2 w-2 rounded-full bg-sky-400" />
+                      <span>securechat-db</span>
+                    </div>
+                    <div className="mt-1 text-xs text-slate-400">
+                      Port <code className="text-slate-200">5432</code>: PostgreSQL 16 + ekstensi <code className="text-slate-200">pgcrypto</code> untuk identitas &amp; kunci publik.
+                    </div>
+                  </div>
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3.5">
+                    <div className="flex items-center gap-2 font-mono text-xs font-bold text-amber-300">
+                      <span className="h-2 w-2 rounded-full bg-amber-400" />
+                      <span>securechat-storage</span>
+                    </div>
+                    <div className="mt-1 text-xs text-slate-400">
+                      Port <code className="text-slate-200">8333</code> (S3) &amp; <code className="text-slate-200">8888</code> (Filer UI): SeaweedFS media terenkripsi.
+                    </div>
+                  </div>
+                </div>
 
-                <CopyableCodeBlock
-                  title="Opsi B: Jalankan Langsung dengan Python venv + Uvicorn"
-                  code={`cd MobileApp_and_Web/Backend/backend
+                {/* Langkah Eksekusi Docker */}
+                <div className="space-y-3">
+                  <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-mono">A</span>
+                    <span>Menjalankan via Docker Compose (Metode Rekomendasi)</span>
+                  </h3>
+                  <p className="text-xs text-slate-300">
+                    Ini adalah cara termudah dan paling stabil karena mengotomatisasi inisialisasi basis data dan storage sekaligus.
+                  </p>
+                  <CopyableCodeBlock
+                    title="Terminal / PowerShell (Folder MobileApp_and_Web/Backend)"
+                    code={`cd MobileApp_and_Web/Backend
+
+# 1. Nyalakan seluruh stack 3 service (API, PostgreSQL, SeaweedFS) di background:
+docker compose up --build -d
+
+# 2. Periksa status kesehatan ketiga container (pastikan db berstatus healthy):
+docker compose ps
+
+# 3. Pantau log real-time dari container API:
+docker compose logs -f api`}
+                  />
+                </div>
+
+                {/* Langkah Alternatif Python Venv */}
+                <div className="space-y-3">
+                  <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-sky-500/20 text-sky-400 text-xs font-mono">B</span>
+                    <span>Menjalankan Langsung secara Lokal (Python venv + Uvicorn)</span>
+                  </h3>
+                  <p className="text-xs text-slate-300">
+                    Gunakan metode ini jika Anda ingin melakukan debugging kode Python secara langsung tanpa container API.
+                    Pastikan PostgreSQL lokal sudah aktif dan terhubung dengan <code className="text-slate-200">DATABASE_URL</code> pada file <code className="text-slate-200">.env</code>.
+                  </p>
+                  <CopyableCodeBlock
+                    title="Terminal / PowerShell (Folder MobileApp_and_Web/Backend/backend)"
+                    code={`cd MobileApp_and_Web/Backend/backend
+
+# Linux / macOS:
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload`}
-                />
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
-                <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-xs text-amber-200">
-                  <strong>Kredensial Bootstrap Default (Development):</strong> Organisasi{" "}
-                  <code>Kartika Operations</code> • Email <code>admin@kartika.local</code> • Password{" "}
-                  <code>ChangeThisAdminPassword123!</code>. Ganti seluruh secret (<code>SYSTEM_ADMIN_API_KEY</code>,{" "}
-                  <code>JWT_SECRET_KEY</code>, dan password) di <code>Backend/.env</code> sebelum produksi.
+# Windows PowerShell:
+python -m venv .venv
+.venv\\Scripts\\Activate.ps1
+pip install -r requirements.txt
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload`}
+                  />
+                </div>
+
+                {/* Auto-Migration & Bootstrap Notes */}
+                <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-4 space-y-2">
+                  <div className="text-xs font-bold text-emerald-400 uppercase tracking-wider font-mono">
+                    Mekanisme Otomatis Saat Startup (Lifecycle)
+                  </div>
+                  <ul className="space-y-1.5 text-xs text-slate-300">
+                    <li>
+                      • <strong className="text-white">Auto-Migration Database:</strong> Saat API dijalankan, fungsi <code className="text-slate-200">_run_idempotent_migrations</code> akan otomatis membuat ekstensi <code className="text-slate-200">pgcrypto</code> serta seluruh tabel skema (termasuk artefak PERISAI-Q) tanpa perlu migrasi manual.
+                    </li>
+                    <li>
+                      • <strong className="text-white">Auto-Bootstrap Organisasi:</strong> API otomatis mendaftarkan organisasi awal <code className="text-emerald-300">Kartika Operations</code> beserta akun Administrator Owner awal.
+                    </li>
+                    <li>
+                      • <strong className="text-white">Bucket SeaweedFS:</strong> Bucket <code className="text-slate-200">securechat-media</code> otomatis dibuat di SeaweedFS S3 saat startup.
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Kredensial Callout */}
+                <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-xs text-amber-200 space-y-1">
+                  <div className="font-bold uppercase tracking-wider">Kredensial Bootstrap Default (Development)</div>
+                  <div>
+                    • <strong>Organisasi:</strong> <code>Kartika Operations</code> | <strong>Role:</strong> Organization Owner
+                  </div>
+                  <div>
+                    • <strong>Email Admin:</strong> <code>admin@kartika.local</code> | <strong>Password:</strong> <code>ChangeThisAdminPassword123!</code>
+                  </div>
+                  <div className="pt-1 text-[11px] text-amber-300/80">
+                    Ganti seluruh secret (<code>SYSTEM_ADMIN_API_KEY</code>, <code>JWT_SECRET_KEY</code>, password database) di file <code>Backend/.env</code> sebelum digunakan pada lingkungan produksi.
+                  </div>
+                </div>
+
+                {/* Verifikasi Backend */}
+                <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-4 space-y-2">
+                  <div className="text-xs font-bold text-sky-400 font-mono uppercase tracking-wider">
+                    Verifikasi Kesehatan Backend
+                  </div>
+                  <p className="text-xs text-slate-300">
+                    Setelah container aktif, buka endpoint berikut di browser atau terminal untuk memastikan layanan siap melayani request:
+                  </p>
+                  <div className="grid gap-2 sm:grid-cols-2 text-xs">
+                    <div className="rounded-lg border border-slate-800/80 bg-slate-900/50 p-2.5">
+                      <div className="font-bold text-white">Healthcheck Endpoint</div>
+                      <code className="text-[11px] text-emerald-300">GET http://localhost:8000/health</code>
+                      <div className="text-[11px] text-slate-400 mt-1">Mengembalikan status database dan penyimpanan S3.</div>
+                    </div>
+                    <div className="rounded-lg border border-slate-800/80 bg-slate-900/50 p-2.5">
+                      <div className="font-bold text-white">Swagger UI &amp; OpenAPI</div>
+                      <code className="text-[11px] text-sky-300">http://localhost:8000/docs</code>
+                      <div className="text-[11px] text-slate-400 mt-1">Dokumentasi interaktif untuk seluruh 14 modul router API.</div>
+                    </div>
+                  </div>
                 </div>
               </section>
 
               {/* 03. Organization Web Console */}
-              <section id="org-console" className="glass-panel rounded-2xl p-6 scroll-mt-24 space-y-4">
+              <section id="org-console" className="glass-panel rounded-2xl p-6 scroll-mt-24 space-y-6">
                 <div className="flex items-start gap-3">
                   <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-sky-400/35 bg-sky-500/10 text-sky-400">
                     <ConsoleAdminIcon className="h-5 w-5" />
                   </span>
                   <div>
-                    <span className="font-mono text-xs font-bold text-emerald-400">03 // ADMIN CONSOLE</span>
-                    <h2 className="text-xl font-bold text-white">Jalankan Organization Web Console</h2>
+                    <span className="font-mono text-xs font-bold text-sky-400">03 // ADMIN CONSOLE</span>
+                    <h2 className="text-xl font-bold text-white">Panduan Menjalankan &amp; Mengoperasikan Web Organisasi</h2>
                     <p className="mt-1 text-sm text-slate-300">
-                      Konsol web admin bersifat statis tanpa langkah build. Sajikan langsung folder{" "}
-                      <code className="text-slate-200">organization_web/</code> lalu buka{" "}
-                      <code className="text-emerald-300">http://localhost:8080</code>.
+                      <strong className="text-white">Organization Web Console</strong> adalah portal manajemen berbasis web untuk
+                      Administrator Organisasi yang berjalan terpisah dari aplikasi klien agen lapangan.
                     </p>
                   </div>
                 </div>
 
-                <CopyableCodeBlock
-                  title="MobileApp_and_Web/organization_web"
-                  code={`cd MobileApp_and_Web/organization_web
-python3 -m http.server 8080`}
-                />
+                {/* Karakteristik Web Console */}
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3.5">
+                    <div className="flex items-center gap-2 font-mono text-xs font-bold text-sky-300">
+                      <span className="h-2 w-2 rounded-full bg-sky-400" />
+                      <span>Pure Static SPA (Tanpa Langkah Build)</span>
+                    </div>
+                    <p className="mt-1 text-xs leading-relaxed text-slate-400">
+                      Dibangun dengan HTML5, JavaScript ES6, dan CSS murni di folder <code className="text-slate-200">organization_web/</code>. Tidak memerlukan <code className="text-slate-200">npm install</code> atau proses compile Node.js.
+                    </p>
+                  </div>
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3.5">
+                    <div className="flex items-center gap-2 font-mono text-xs font-bold text-emerald-300">
+                      <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                      <span>Zero-Knowledge Plaintext</span>
+                    </div>
+                    <p className="mt-1 text-xs leading-relaxed text-slate-400">
+                      Konsol admin hanya mengelola provisioning user, grup, dan kunci publik. Konsol ini <strong className="text-slate-200">tidak pernah</strong> dapat membaca plaintext pesan obrolan maupun kunci privat agen.
+                    </p>
+                  </div>
+                </div>
 
-                <ol className="space-y-1.5 text-xs text-slate-300 sm:text-sm">
-                  <li>1. Login menggunakan email &amp; password administrator bootstrap.</li>
-                  <li>2. Buat akun <em>field agent</em> baru dan terbitkan kode aktivasi sekali pakai (berlaku 72 jam).</li>
-                  <li>3. Buat grup organisasi jika diperlukan (perubahan anggota otomatis menaikkan <code>key_epoch</code>).</li>
-                </ol>
+                {/* Cara Menjalankan */}
+                <div className="space-y-3">
+                  <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                    <TerminalIcon className="h-4 w-4 text-emerald-400" />
+                    <span>Langkah Menjalankan Static Web Server</span>
+                  </h3>
+                  <p className="text-xs text-slate-300">
+                    Sajikan folder <code className="text-slate-200">MobileApp_and_Web/organization_web</code> menggunakan server statis apa pun pilihan Anda:
+                  </p>
+
+                  <CopyableCodeBlock
+                    title="Opsi 1: Menggunakan Python (Praktis di Semua OS)"
+                    code={`cd MobileApp_and_Web/organization_web
+python -m http.server 8080`}
+                  />
+
+                  <CopyableCodeBlock
+                    title="Opsi 2: Menggunakan Node.js / npx serve"
+                    code={`# Di direktori proyek atau dari folder organization_web:
+npx serve -l 8080 MobileApp_and_Web/organization_web`}
+                  />
+                </div>
+
+                {/* Akses & Login */}
+                <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-4 space-y-3">
+                  <div className="text-xs font-bold text-white flex items-center gap-2">
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-mono">1</span>
+                    <span>Akses Portal &amp; Konfigurasi URL Backend</span>
+                  </div>
+                  <ol className="space-y-1.5 text-xs text-slate-300 list-decimal list-inside">
+                    <li>Buka browser dan akses <code className="text-emerald-300">http://localhost:8080</code>.</li>
+                    <li>
+                      Secara default, konsol otomatis terhubung ke <code className="text-slate-200">http://localhost:8000/api/v1</code>.
+                      Jika backend Anda berjalan di alamat host atau port lain, masuk ke menu <strong>Pengaturan</strong> dan perbarui Backend Base URL (disimpan di <code className="text-slate-200">localStorage</code>).
+                    </li>
+                    <li>
+                      Login menggunakan kredensial admin: Email <code className="text-slate-200">admin@kartika.local</code> dan password <code className="text-slate-200">ChangeThisAdminPassword123!</code>.
+                    </li>
+                  </ol>
+                </div>
+
+                {/* Alur Kerja & SOP 6 Menu Konsol */}
+                <div className="space-y-3">
+                  <div className="text-xs font-bold text-emerald-400 font-mono uppercase tracking-wider">
+                    Alur Operasional Administrator (SOP 6 Menu)
+                  </div>
+
+                  <div className="space-y-2.5">
+                    {/* Menu 1: Pengguna & Aktivasi */}
+                    <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-4">
+                      <div className="flex items-center justify-between gap-2">
+                        <strong className="text-sm text-white">1. Menu Pengguna: Provisioning &amp; Kode Aktivasi 72 Jam</strong>
+                        <span className="rounded bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] text-emerald-300 border border-emerald-500/30">WAJIB</span>
+                      </div>
+                      <p className="mt-1.5 text-xs text-slate-300 leading-relaxed">
+                        Sistem RUDALPPK menonaktifkan pendaftaran publik bebas (*closed organization*).
+                        Setiap akun agen lapangan harus dibuat terlebih dahulu oleh Admin di menu ini.
+                      </p>
+                      <ul className="mt-2 space-y-1 text-xs text-slate-400 list-disc list-inside">
+                        <li>Klik <strong>Tambah Pengguna</strong>: Isi Nama Tampilan dan Callsign/Nomor Panggil unik.</li>
+                        <li>Klik <strong>Terbitkan Kode Aktivasi</strong>: Sistem membuat token 1x pakai (hash SHA-256) berlaku 72 jam.</li>
+                        <li>Berikan kode aktivasi tersebut kepada personel lapangan untuk dimasukkan ke aplikasi klien Flutter saat registrasi perangkat.</li>
+                        <li>Tombol <strong>Revoke / Cabut Kunci</strong>: Digunakan jika perangkat personel hilang, langsung memutus token JWT dan memblokir perangkat secara permanen.</li>
+                      </ul>
+                    </div>
+
+                    {/* Menu 2: Grup */}
+                    <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-4">
+                      <strong className="text-sm text-white">2. Menu Grup: Komunikasi Terenkripsi &amp; Rotasi Key Epoch</strong>
+                      <p className="mt-1.5 text-xs text-slate-300 leading-relaxed">
+                        Admin dapat membentuk grup operasi (misal: <em>Regu Taktis Alpha</em>) dan mengatur anggotanya.
+                        Setiap penambahan atau penghapusan anggota secara otomatis meningkatkan parameter <code className="text-emerald-300">key_epoch</code> grup untuk menjamin kerahasiaan pesan di masa depan (*Forward Secrecy*).
+                      </p>
+                    </div>
+
+                    {/* Menu 3: PERISAI-Sign */}
+                    <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-4">
+                      <strong className="text-sm text-white">3. Menu PERISAI-Sign: Tanda Tangan Pasca-Kuantum (ML-DSA-65)</strong>
+                      <p className="mt-1.5 text-xs text-slate-300 leading-relaxed">
+                        Gunakan menu ini untuk menandatangani instruksi komando (<code className="text-slate-200">command_instruction</code>), paket pembaruan firmware (<code className="text-slate-200">firmware_package</code>), atau laporan intelijen dengan tanda tangan digital tahan-kuantum <strong className="text-white">ML-DSA-65 (NIST FIPS 204)</strong> dan verifikasi hash SHA3-256.
+                      </p>
+                    </div>
+
+                    {/* Menu 4: PERISAI-Lab */}
+                    <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-4">
+                      <strong className="text-sm text-white">4. Menu PERISAI-Lab: Audit Kesiapan Armada &amp; Simulasi Shor</strong>
+                      <p className="mt-1.5 text-xs text-slate-300 leading-relaxed">
+                        Memantau kesiapan seluruh armada perangkat aktif terhadap ancaman pasca-kuantum (*Harvest Now, Decrypt Later*), melihat matriks kerentanan algoritma klasik (RSA, ECDH), serta menjalankan simulasi faktorisasi kuantum Shor lokal.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </section>
 
               {/* 04. Flutter Field Client */}
