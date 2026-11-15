@@ -9,7 +9,7 @@ import { Navbar } from "@/components/Navbar";
 export const metadata: Metadata = {
   title: "Unduh RUDALPPK — Halaman Unduhan Resmi Secure Field Comms & PERISAI-Q",
   description:
-    "Unduh paket Field Client Flutter, Organization Web Console, FastAPI + PQC Docker Backend, dan Blueprint AEGIS-GUARD Tier 3 dengan verifikasi SHA-256.",
+    "Unduh paket Flutter Field Client, Precompiled Web Release, Organization Web Console, dan Backend Python 3.12 (FastAPI + PQC) dengan verifikasi SHA-256.",
 };
 
 export default function DownloadPage() {
@@ -44,8 +44,8 @@ export default function DownloadPage() {
                   Unduh Paket Aplikasi RUDALPPK
                 </h1>
                 <p className="mt-3 text-sm leading-relaxed text-slate-300 sm:text-base">
-                  Pilih komponen yang Anda butuhkan: aplikasi agen lapangan Flutter, konsol admin web statis,
-                  stack relai FastAPI + PostgreSQL + SeaweedFS, atau spesifikasi AEGIS-GUARD Tier 3.
+                  Pilih komponen yang Anda butuhkan: kode sumber Flutter Field Client, rilis web siap pakai
+                  (<code>build/web</code>), konsol admin web statis, atau backend Python 3.12 (FastAPI + PostgreSQL + SeaweedFS).
                 </p>
               </div>
 
@@ -95,8 +95,8 @@ export default function DownloadPage() {
                 <li className="flex items-start gap-2.5">
                   <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-400" />
                   <span>
-                    <strong>Catatan Keamanan:</strong> Prototipe fungsional dengan daftar audit terbuka di{" "}
-                    <code>SECURITY_AUDIT.md</code> serta spesifikasi lanjutan <code>AEGIS-GUARD</code> Tier 3.
+                    <strong>Catatan Keamanan:</strong> Prototipe fungsional dengan dokumentasi audit terbuka di{" "}
+                    <code>SECURITY_AUDIT.md</code> (belum tervalidasi ACVP / belum bersertifikat CMVP).
                   </span>
                 </li>
               </ul>

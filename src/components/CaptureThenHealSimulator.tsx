@@ -7,11 +7,11 @@ import {
   LockQuantumIcon,
   TerminalIcon,
 } from "@/components/Icons";
-import { EVIDENCE_JSON_PREVIEW, YARA_RULE_PREVIEW } from "@/data/rudalppk";
+import { SHOR_SIM_JSON_PREVIEW, SIGN_VERIFY_JSON_PREVIEW } from "@/data/rudalppk";
 
-type SimScenario = "idle" | "byte" | "debugger";
+type SimScenario = "idle" | "shor" | "sign";
 type StageStatus = "idle" | "running" | "done";
-type ArtifactTab = "log" | "json" | "yara";
+type ArtifactTab = "log" | "shor" | "sign";
 
 export function CaptureThenHealSimulator() {
   const [scenario, setScenario] = useState<SimScenario>("idle");
@@ -20,8 +20,8 @@ export function CaptureThenHealSimulator() {
   const [stage3, setStage3] = useState<StageStatus>("idle");
   const [activeTab, setActiveTab] = useState<ArtifactTab>("log");
   const [logs, setLogs] = useState<string[]>([
-    "[AEGIS-GUARD] Stub loader Rust aktif — eksekusi RAM anonim via memfd_create + fexecve.",
-    "[RASP] Pengawasan ptrace aktif. Menunggu anomali atau simulasi serangan...",
+    "[PERISAI-Q] Mesin PQC siap — mendukung ML-KEM-(512/768/1024) & ML-DSA-(44/65/87).",
+    "[LAB & SIGN] Pilih simulasi serangan kuantum Shor RSA atau verifikasi ML-DSA di atas...",
   ]);
 
   const timersRef = useRef<number[]>([]);
@@ -35,7 +35,7 @@ export function CaptureThenHealSimulator() {
     return () => clearTimers();
   }, []);
 
-  function runSimulation(type: "byte" | "debugger") {
+  function runSimulation(type: "shor" | "sign") {
     clearTimers();
     setScenario(type);
     setStage1("running");
@@ -43,44 +43,77 @@ export function CaptureThenHealSimulator() {
     setStage3("idle");
     setActiveTab("log");
 
-    const triggerMsg =
-      type === "byte"
-        ? "[ALERT] Sabotase biner terdeteksi pada offset 0x0004F2A0 (0x74 -> 0x75)!"
-        : "[ALERT] Upaya injeksi debugger GDB / manipulasi pustaka LD_PRELOAD terdeteksi!";
-
-    setLogs([
-      triggerMsg,
-      "[TAHAP 1 // <1 ms] RASP ptrace membekukan eksekusi thread secara atomik (tanpa restart)...",
-    ]);
-
-    const t1 = window.setTimeout(() => {
-      setStage1("done");
-      setStage2("running");
-      setLogs((prev) => [
-        ...prev,
-        "[TAHAP 2 // <5 ms] Forensic Vault ISO/IEC 27037 mengekstrak evidence_metadata.json, injected_payload.bin & rule_generated.yar...",
-        "[SEAL] Hashing ganda BLAKE3 + SHA-256 selesai. Aturan YARA siap disebar ke SIEM militer.",
+    if (type === "shor") {
+      setLogs([
+        "[POST /api/v1/perisai/lab/simulate-rsa] Memulai simulasi Shor & QUBO pada RSA (N=3233, e=17)...",
+        "[TAHAP 1] Mencari periode kuantum & memfaktorkan modulus RSA...",
       ]);
-    }, 550);
 
-    const t2 = window.setTimeout(() => {
-      setStage2("done");
-      setStage3("running");
-      setLogs((prev) => [
-        ...prev,
-        "[TAHAP 3 // 14,2 ms] Mesin Reed-Solomon GF(2^8) merekonstruksi segmen byte rusak (toleransi 20-30%)...",
+      const t1 = window.setTimeout(() => {
+        setStage1("done");
+        setStage2("running");
+        setLogs((prev) => [
+          ...prev,
+          "[RSA BROKEN] Faktor ditemukan: p=53, q=61 -> kunci privat d=2753 berhasil direkonstruksi!",
+          "[TAHAP 2] Menguji ketahanan ML-KEM-768 (FIPS 203) & ML-DSA-65 (FIPS 204) terhadap serangan...",
+        ]);
+      }, 550);
+
+      const t2 = window.setTimeout(() => {
+        setStage2("done");
+        setStage3("running");
+        setLogs((prev) => [
+          ...prev,
+          "[PQC SAFE] Masalah Module-LWE pada ML-KEM-768 & ML-DSA-65 tidak dapat difaktorkan algoritma Shor.",
+          "[TAHAP 3] Menyimpan event QUANTUM_SIMULATION_RUN ke tabel pqc_audit_logs...",
+        ]);
+      }, 1250);
+
+      const t3 = window.setTimeout(() => {
+        setStage3("done");
+        setLogs((prev) => [
+          ...prev,
+          "[SELESAI] Status: RSA_BROKEN_PQC_SAFE • Lihat tab JSON /perisai/lab/simulate-rsa.",
+        ]);
+      }, 1900);
+
+      timersRef.current.push(t1, t2, t3);
+    } else {
+      setLogs([
+        "[POST /api/v1/perisai/sign] Menandatangani artefak command_instruction dengan ML-DSA-65...",
+        "[TAHAP 1] Menghitung hash SHA-256 kanonik & membungkus payload menggunakan ML-KEM-768...",
       ]);
-    }, 1250);
 
-    const t3 = window.setTimeout(() => {
-      setStage3("done");
-      setLogs((prev) => [
-        ...prev,
-        "[HEALED] Hash integritas biner kembali 100% identik. Aplikasi melanjutkan eksekusi normal di RAM.",
-      ]);
-    }, 1950);
+      const t1 = window.setTimeout(() => {
+        setStage1("done");
+        setStage2("running");
+        setLogs((prev) => [
+          ...prev,
+          "[SIGNED] Artefak tersimpan di tabel signed_artifacts (signature 3309 byte).",
+          "[TAHAP 2] Memverifikasi tanda tangan via POST /api/v1/perisai/sign/verify...",
+        ]);
+      }, 550);
 
-    timersRef.current.push(t1, t2, t3);
+      const t2 = window.setTimeout(() => {
+        setStage2("done");
+        setStage3("running");
+        setLogs((prev) => [
+          ...prev,
+          "[VALID] Tanda tangan ML-DSA-65 terverifikasi otentik.",
+          "[TAHAP 3] Menguji modifikasi 1-bit pada teks komando (uji anti-tampering)...",
+        ]);
+      }, 1250);
+
+      const t3 = window.setTimeout(() => {
+        setStage3("done");
+        setLogs((prev) => [
+          ...prev,
+          "[TAMPER REJECTED] Modifikasi terdeteksi! Verifikasi otomatis menolak artefak yang diubah.",
+        ]);
+      }, 1900);
+
+      timersRef.current.push(t1, t2, t3);
+    }
   }
 
   function resetSimulation() {
@@ -91,8 +124,8 @@ export function CaptureThenHealSimulator() {
     setStage3("idle");
     setActiveTab("log");
     setLogs([
-      "[AEGIS-GUARD] Stub loader Rust aktif — eksekusi RAM anonim via memfd_create + fexecve.",
-      "[RASP] Pengawasan ptrace aktif. Menunggu anomali atau simulasi serangan...",
+      "[PERISAI-Q] Mesin PQC siap — mendukung ML-KEM-(512/768/1024) & ML-DSA-(44/65/87).",
+      "[LAB & SIGN] Pilih simulasi serangan kuantum Shor RSA atau verifikasi ML-DSA di atas...",
     ]);
   }
 
@@ -120,17 +153,19 @@ export function CaptureThenHealSimulator() {
 
   const overallStatus =
     scenario === "idle"
-      ? "SIAGA // INTEGRITAS BINER 100%"
+      ? "SIAGA // PERISAI-LAB & PERISAI-SIGN"
       : stage3 === "done"
-        ? "PULIH 100% // BUKTI TERSEGEL ISO/IEC 27037"
-        : "ANOMALI TERDETEKSI // SIKLUS CAPTURE-THEN-HEAL AKTIF";
+        ? scenario === "shor"
+          ? "SELESAI // RSA_BROKEN_PQC_SAFE"
+          : "SELESAI // ML-DSA-65 VALID & TAMPER REJECTED"
+        : "SIMULASI KRIPTOGRAFI PASCA-KUANTUM BERJALAN...";
 
   const inspectorContent =
     activeTab === "log"
       ? logs.join("\n")
-      : activeTab === "json"
-        ? EVIDENCE_JSON_PREVIEW
-        : YARA_RULE_PREVIEW;
+      : activeTab === "shor"
+        ? SHOR_SIM_JSON_PREVIEW
+        : SIGN_VERIFY_JSON_PREVIEW;
 
   return (
     <div className="glass-panel rounded-2xl p-5 sm:p-7">
@@ -147,24 +182,24 @@ export function CaptureThenHealSimulator() {
             {overallStatus}
           </span>
           <span className="font-mono text-xs text-slate-400">
-            BLAKE3 + SHA-256 • memfd_create + fexecve
+            ML-KEM-768 • ML-DSA-65 • AES-256-GCM
           </span>
         </div>
 
         <div className="flex flex-wrap gap-2.5">
           <button
             type="button"
-            onClick={() => runSimulation("byte")}
+            onClick={() => runSimulation("shor")}
             className="rounded-lg border border-rose-500/45 bg-rose-500/10 px-3.5 py-2 text-xs font-semibold text-rose-200 transition hover:bg-rose-500/20"
           >
-            Sabotase Byte (0x0004F2A0: 0x74 → 0x75)
+            Simulasi Shor RSA (N=3233) vs ML-KEM
           </button>
           <button
             type="button"
-            onClick={() => runSimulation("debugger")}
-            className="rounded-lg border border-amber-500/45 bg-amber-500/10 px-3.5 py-2 text-xs font-semibold text-amber-200 transition hover:bg-amber-500/20"
+            onClick={() => runSimulation("sign")}
+            className="rounded-lg border border-sky-500/45 bg-sky-500/10 px-3.5 py-2 text-xs font-semibold text-sky-200 transition hover:bg-sky-500/20"
           >
-            Injeksi Debugger (GDB / LD_PRELOAD)
+            Uji Tanda Tangan PERISAI-Sign (ML-DSA-65)
           </button>
           <button
             type="button"
@@ -177,7 +212,6 @@ export function CaptureThenHealSimulator() {
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-12">
-        {/* Pipeline stages */}
         <div className="space-y-3.5 lg:col-span-6">
           <div
             className={`rounded-xl border p-4 transition ${
@@ -191,14 +225,16 @@ export function CaptureThenHealSimulator() {
             <div className="flex items-center justify-between gap-2">
               <span className="inline-flex items-center gap-2 font-mono text-xs font-bold text-sky-300">
                 <AlertBugIcon className="h-4 w-4 text-rose-400" />
-                <span>TAHAP 1 • &lt; 1 ms</span>
+                <span>TAHAP 1 • EKSEKUSI ALGORITMA</span>
               </span>
               {statusBadge(stage1)}
             </div>
-            <h4 className="mt-1.5 text-sm font-bold text-white">Deteksi RASP &amp; Pembekuan Atomik</h4>
+            <h4 className="mt-1.5 text-sm font-bold text-white">
+              Faktorisasi Shor RSA / Penandatanganan Artefak
+            </h4>
             <p className="mt-1 text-xs leading-relaxed text-slate-400">
-              Mekanisme <code className="text-slate-200">ptrace</code> mendeteksi debugger jahat (GDB/LLDB) dan
-              manipulasi <code className="text-slate-200">LD_PRELOAD</code>, membekukan eksekusi tanpa <em>restart</em>.
+              Memfaktorkan modulus RSA uji (<code className="text-slate-200">N=3233, e=17</code>) atau membuat
+              tanda tangan kanonik <code className="text-slate-200">ML-DSA-65</code> pada instruksi komando.
             </p>
           </div>
 
@@ -214,17 +250,16 @@ export function CaptureThenHealSimulator() {
             <div className="flex items-center justify-between gap-2">
               <span className="inline-flex items-center gap-2 font-mono text-xs font-bold text-sky-300">
                 <LockQuantumIcon className="h-4 w-4 text-sky-400" />
-                <span>TAHAP 2 • &lt; 5 ms</span>
+                <span>TAHAP 2 • VERIFIKASI PQC</span>
               </span>
               {statusBadge(stage2)}
             </div>
             <h4 className="mt-1.5 text-sm font-bold text-white">
-              Penyegelan Bukti Forensic Vault (ISO/IEC 27037)
+              Ketahanan Kisi ML-KEM-768 &amp; Validasi ML-DSA
             </h4>
             <p className="mt-1 text-xs leading-relaxed text-slate-400">
-              Mengekstrak <code className="text-slate-200">evidence_metadata.json</code>,{" "}
-              <code className="text-slate-200">injected_payload.bin</code>, dan{" "}
-              <code className="text-slate-200">rule_generated.yar</code> dengan segel ganda BLAKE3 + SHA-256.
+              Membuktikan keamanan enkapsulasi kunci <code className="text-slate-200">ML-KEM-768</code> dan
+              memvalidasi keaslian tanda tangan artefak pada endpoint backend.
             </p>
           </div>
 
@@ -240,29 +275,28 @@ export function CaptureThenHealSimulator() {
             <div className="flex items-center justify-between gap-2">
               <span className="inline-flex items-center gap-2 font-mono text-xs font-bold text-sky-300">
                 <HealPulseIcon className="h-4 w-4 text-emerald-400" />
-                <span>TAHAP 3 • 14,2 ms</span>
+                <span>TAHAP 3 • AUDIT LOG &amp; ANTI-TAMPER</span>
               </span>
               {statusBadge(stage3)}
             </div>
             <h4 className="mt-1.5 text-sm font-bold text-white">
-              Pemulihan Biner Mandiri via Reed-Solomon GF(2⁸)
+              Pencatatan Audit Armada &amp; Penolakan Modifikasi
             </h4>
             <p className="mt-1 text-xs leading-relaxed text-slate-400">
-              Merekonstruksi byte yang dirusak (toleransi 20–30% kerusakan) tanpa cadangan penuh hingga nilai hash
-              integritas kembali 100% identik.
+              Mencatat hasil ke tabel <code className="text-slate-200">pqc_audit_logs</code> serta menolak
+              eksekusi apabila terdapat modifikasi 1-bit pada payload.
             </p>
           </div>
         </div>
 
-        {/* Artifact Inspector */}
         <div className="flex flex-col overflow-hidden rounded-xl border border-slate-800 bg-[#05080d] lg:col-span-6">
           <div className="flex flex-wrap items-center gap-1 border-b border-slate-800 bg-slate-900/70 px-3 py-2">
             <TerminalIcon className="mr-1.5 h-4 w-4 text-emerald-400" />
             {(
               [
                 { id: "log", label: "Log Eksekusi" },
-                { id: "json", label: "evidence_metadata.json" },
-                { id: "yara", label: "rule_generated.yar" },
+                { id: "shor", label: "/perisai/lab/simulate-rsa" },
+                { id: "sign", label: "/perisai/sign/verify" },
               ] as const
             ).map((tab) => (
               <button

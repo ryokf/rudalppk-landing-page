@@ -158,20 +158,28 @@ export default function DocsPage() {
                     <ServerStackIcon className="h-5 w-5" />
                   </span>
                   <div>
-                    <span className="font-mono text-xs font-bold text-emerald-400">02 // BACKEND RELAI &amp; PQC</span>
-                    <h2 className="text-xl font-bold text-white">Jalankan Stack Backend (Docker Compose)</h2>
+                    <span className="font-mono text-xs font-bold text-emerald-400">02 // PYTHON 3.12 BACKEND (FASTAPI)</span>
+                    <h2 className="text-xl font-bold text-white">Jalankan Backend Python (Docker / Uvicorn)</h2>
                     <p className="mt-1 text-sm text-slate-300">
-                      Backend berjalan di <code className="text-emerald-300">http://localhost:8000</code>, menerapkan
-                      migrasi PostgreSQL secara otomatis, dan melakukan bootstrap organisasi awal.
+                      Backend dibangun dengan <strong className="text-white">Python 3.12 (FastAPI + Uvicorn + SQLAlchemy async)</strong>{" "}
+                      dan berjalan di <code className="text-emerald-300">http://localhost:8000</code> bersama PostgreSQL 16 &amp; SeaweedFS.
                     </p>
                   </div>
                 </div>
 
                 <CopyableCodeBlock
-                  title="MobileApp_and_Web/Backend"
+                  title="Opsi A: Docker Compose (Direkomendasikan)"
                   code={`cd MobileApp_and_Web/Backend
 docker compose up --build -d
 docker compose logs -f api`}
+                />
+
+                <CopyableCodeBlock
+                  title="Opsi B: Jalankan Langsung dengan Python venv + Uvicorn"
+                  code={`cd MobileApp_and_Web/Backend/backend
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload`}
                 />
 
                 <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-xs text-amber-200">
@@ -357,7 +365,8 @@ flutter test`}
                       <tr>
                         <td className="py-2.5 pr-4 font-semibold text-white">PERISAI-Q Sign &amp; Lab</td>
                         <td className="py-2.5 font-mono text-[11px]">
-                          GET /api/v1/perisai/lab/backends • Endpoint perisai_sign &amp; perisai_lab
+                          POST /api/v1/perisai/sign/sign, /verify • POST /api/v1/perisai/lab/simulate-rsa • GET
+                          /api/v1/perisai/lab/readiness, /benchmark, /backends
                         </td>
                       </tr>
                     </tbody>

@@ -6,10 +6,8 @@ import { DownloadCenter } from "@/components/DownloadCenter";
 import { Footer } from "@/components/Footer";
 import { HeroDownloadActions } from "@/components/HeroDownloadActions";
 import {
-  AlertBugIcon,
   BookDocsIcon,
   ConsoleAdminIcon,
-  CpuBinaryIcon,
   FactoryGridIcon,
   KeyEpochIcon,
   LockQuantumIcon,
@@ -39,18 +37,20 @@ export default function HomePage() {
             <div className="space-y-6 lg:col-span-7">
               <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-3.5 py-1 font-mono text-[11px] font-semibold tracking-wider text-emerald-300">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
-                <span>SECURE FIELD COMMS • PERISAI-Q • AEGIS-GUARD</span>
+                <span>SECURE FIELD COMMS (SAD v2.0) • PERISAI-Q CRYPTOSUITE</span>
               </div>
 
               <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-5xl sm:leading-[1.12]">
-                Komunikasi Lapangan <span className="text-emerald-400">E2EE &amp; Pasca-Kuantum</span> dengan
-                Pertahanan Biner <span className="bg-gradient-to-r from-emerald-300 to-sky-400 bg-clip-text text-transparent">Capture-Then-Heal</span>
+                Komunikasi Lapangan <span className="text-emerald-400">Hibrida Pasca-Kuantum</span> &amp; Otentikasi
+                Komando <span className="bg-gradient-to-r from-emerald-300 to-sky-400 bg-clip-text text-transparent">PERISAI-Q</span>
               </h1>
 
               <p className="max-w-xl text-base leading-relaxed text-slate-300">
-                <strong className="text-white">RUDALPPK</strong> memadukan aplikasi agen Flutter, konsol organisasi
-                statis, relai FastAPI + PostgreSQL + SeaweedFS berkemampuan <code className="text-emerald-300">pqcrypto</code>{" "}
-                (ML-KEM &amp; ML-DSA), serta cetak biru DFIR AEGIS-GUARD Tier 3.
+                <strong className="text-white">RUDALPPK</strong> memadukan aplikasi agen <strong className="text-white">Flutter</strong>,{" "}
+                <strong className="text-white">Organization Web Console</strong> statis, dan backend{" "}
+                <strong className="text-sky-300">Python 3.12 (FastAPI + PostgreSQL 16 + SeaweedFS)</strong> dengan
+                enkripsi hibrida <code className="text-emerald-300">X25519 + ML-KEM</code> serta tanda tangan{" "}
+                <code className="text-emerald-300">Ed25519 + ML-DSA</code>.
               </p>
 
               <HeroDownloadActions />
@@ -66,24 +66,24 @@ export default function HomePage() {
                 </div>
                 <div className="glass-panel rounded-xl p-3">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="font-mono text-lg font-extrabold text-sky-400">E2EE</span>
+                    <span className="font-mono text-lg font-extrabold text-sky-400">Envelope v2</span>
                     <KeyEpochIcon className="h-4 w-4 text-sky-400/80" />
                   </div>
-                  <div className="mt-0.5 text-xs text-slate-400">Ed25519 + X25519</div>
+                  <div className="mt-0.5 text-xs text-slate-400">X25519 + ML-KEM</div>
                 </div>
                 <div className="glass-panel rounded-xl p-3">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="font-mono text-lg font-extrabold text-emerald-400">ML-KEM</span>
+                    <span className="font-mono text-lg font-extrabold text-emerald-400">ML-DSA</span>
                     <LockQuantumIcon className="h-4 w-4 text-emerald-400/80" />
                   </div>
-                  <div className="mt-0.5 text-xs text-slate-400">PQClean Backend</div>
+                  <div className="mt-0.5 text-xs text-slate-400">PERISAI-Sign 44/65/87</div>
                 </div>
                 <div className="glass-panel rounded-xl p-3">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="font-mono text-lg font-extrabold text-white">Tier 3</span>
-                    <CpuBinaryIcon className="h-4 w-4 text-sky-400/80" />
+                    <span className="font-mono text-lg font-extrabold text-white">Python 3.12</span>
+                    <ServerStackIcon className="h-4 w-4 text-sky-400/80" />
                   </div>
-                  <div className="mt-0.5 text-xs text-slate-400">Reed-Solomon DFIR</div>
+                  <div className="mt-0.5 text-xs text-slate-400">FastAPI + Docker</div>
                 </div>
               </div>
             </div>
@@ -118,14 +118,14 @@ export default function HomePage() {
                       <ConsoleAdminIcon className="h-3.5 w-3.5 text-sky-400" />
                       <span>ORG CONSOLE</span>
                     </span>
-                    <span className="text-slate-200">Static SPA (PBKDF2)</span>
+                    <span className="text-slate-200">Static SPA (6 Menu)</span>
                   </div>
                   <div className="flex items-center justify-between gap-2">
                     <span className="inline-flex items-center gap-2 text-slate-400">
                       <ServerStackIcon className="h-3.5 w-3.5 text-sky-400" />
-                      <span>RELAY API</span>
+                      <span>PYTHON BACKEND</span>
                     </span>
-                    <span className="text-sky-300">FastAPI + PG 16 + S3</span>
+                    <span className="text-sky-300">Python 3.12 • FastAPI + PG 16</span>
                   </div>
                   <div className="flex items-center justify-between gap-2">
                     <span className="inline-flex items-center gap-2 text-slate-400">
@@ -136,10 +136,10 @@ export default function HomePage() {
                   </div>
                   <div className="flex items-center justify-between gap-2">
                     <span className="inline-flex items-center gap-2 text-slate-400">
-                      <CpuBinaryIcon className="h-3.5 w-3.5 text-slate-300" />
-                      <span>TIER 3 SPEC</span>
+                      <RadarPulseIcon className="h-3.5 w-3.5 text-sky-300" />
+                      <span>PERISAI-Q</span>
                     </span>
-                    <span className="text-slate-200">AEGIS-GUARD (Rust)</span>
+                    <span className="text-slate-200">Vault • Sign • Lab</span>
                   </div>
                 </div>
 
@@ -178,7 +178,7 @@ export default function HomePage() {
                 01 // MASALAH &amp; SOLUSI
               </span>
               <h2 className="mt-1.5 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
-                Tiga Celah Kritis yang Diatasi
+                Tiga Tantangan Operasi yang Diselesaikan
               </h2>
             </div>
 
@@ -191,13 +191,14 @@ export default function HomePage() {
                     </span>
                     <span className="font-mono text-[11px] font-semibold text-sky-300">SAD v2.0 // ZERO-TRUST</span>
                   </div>
-                  <h3 className="mt-3.5 text-base font-bold text-white">Komunikasi Terisolasi &amp; Terkendali</h3>
+                  <h3 className="mt-3.5 text-base font-bold text-white">Komunikasi Organisasi Terkendali</h3>
                   <p className="mt-2 text-xs leading-relaxed text-slate-300 sm:text-sm">
-                    Tanpa registrasi bebas. Admin menerbitkan kode aktivasi 72 jam &amp; server tak pernah melihat plaintext.
+                    Tanpa registrasi bebas. Admin menerbitkan kode aktivasi 72 jam (SHA-256) &amp; relai tidak pernah
+                    menerima plaintext atau kunci privat.
                   </p>
                 </div>
                 <div className="mt-4 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-xs font-semibold text-emerald-300">
-                  Ed25519 + X25519 + key_epoch
+                  12-Word Phrase + Ed25519 + key_epoch
                 </div>
               </article>
 
@@ -207,33 +208,34 @@ export default function HomePage() {
                     <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-amber-500/35 bg-amber-500/10 text-amber-400">
                       <LockQuantumIcon className="h-5 w-5" />
                     </span>
-                    <span className="font-mono text-[11px] font-semibold text-amber-300">PERISAI-Q // HNDL</span>
+                    <span className="font-mono text-[11px] font-semibold text-amber-300">ENVELOPE v2 // HNDL</span>
                   </div>
-                  <h3 className="mt-3.5 text-base font-bold text-white">Risiko Kuantum &amp; Spoofing Komando</h3>
+                  <h3 className="mt-3.5 text-base font-bold text-white">Ancaman Harvest Now, Decrypt Later</h3>
                   <p className="mt-2 text-xs leading-relaxed text-slate-300 sm:text-sm">
-                    RSA/ECC rentan algoritma Shor; instruksi komando dan firmware OT/IoT butuh tanda tangan tahan kuantum.
+                    Pertukaran kunci klasik rentan disadap hari ini dan didekripsi saat komputer kuantum matang.
                   </p>
                 </div>
                 <div className="mt-4 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-xs font-semibold text-emerald-300">
-                  Vault, Sign (ML-DSA) &amp; Lab Qiskit
+                  Hybrid X25519 + ML-KEM-(512/768/1024)
                 </div>
               </article>
 
               <article className="glass-panel flex flex-col justify-between rounded-2xl p-5">
                 <div>
                   <div className="flex items-center justify-between gap-2">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-rose-500/35 bg-rose-500/10 text-rose-400">
-                      <AlertBugIcon className="h-5 w-5" />
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-emerald-500/35 bg-emerald-500/10 text-emerald-400">
+                      <ShieldCheckIcon className="h-5 w-5" />
                     </span>
-                    <span className="font-mono text-[11px] font-semibold text-rose-300">AEGIS-GUARD // TIER 3</span>
+                    <span className="font-mono text-[11px] font-semibold text-emerald-300">PERISAI-SIGN &amp; LAB</span>
                   </div>
-                  <h3 className="mt-3.5 text-base font-bold text-white">Sabotase Biner &amp; Hilangnya Bukti</h3>
+                  <h3 className="mt-3.5 text-base font-bold text-white">Otentikasi Komando &amp; Audit Armada</h3>
                   <p className="mt-2 text-xs leading-relaxed text-slate-300 sm:text-sm">
-                    Restart paksa menghapus bukti forensik RAM saat terjadi patch ilegal (mis. <code>0x74 → 0x75</code>).
+                    Instruksi komando dan paket firmware OT/IoT wajib diverifikasi keasliannya serta diaudit kesiapan
+                    pasca-kuantumnya.
                   </p>
                 </div>
                 <div className="mt-4 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-xs font-semibold text-emerald-300">
-                  Capture-Then-Heal (Reed-Solomon)
+                  ML-DSA-(44/65/87) &amp; Fleet Readiness Audit
                 </div>
               </article>
             </div>
@@ -245,10 +247,10 @@ export default function HomePage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-8">
               <span className="font-mono text-xs font-semibold uppercase tracking-widest text-emerald-400">
-                02 // ARSITEKTUR REPOSITORI RUDALPPK
+                02 // ARSITEKTUR PROYEK RUDALPPK
               </span>
               <h2 className="mt-1.5 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
-                Empat Komponen Utama dalam Ekosistem
+                Empat Pilar Utama dalam Repositori
               </h2>
             </div>
 
@@ -256,15 +258,15 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* SECTION 3: SIMULASI INTERAKTIF TIER 3 */}
+        {/* SECTION 3: SIMULASI INTERAKTIF PERISAI-LAB & SIGN */}
         <section id="simulasi" className="py-14 sm:py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-8">
               <span className="font-mono text-xs font-semibold uppercase tracking-widest text-emerald-400">
-                03 // SIMULASI DESAIN TIER 3 (PA-T3-PRD-001)
+                03 // DEMONSTRASI INTERAKTIF PERISAI-Q
               </span>
               <h2 className="mt-1.5 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
-                Simulasi Siklus Capture-Then-Heal AEGIS-GUARD
+                Simulasi PERISAI-Lab (Shor RSA) &amp; PERISAI-Sign (ML-DSA)
               </h2>
             </div>
 
@@ -277,7 +279,7 @@ export default function HomePage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-8">
               <span className="font-mono text-xs font-semibold uppercase tracking-widest text-emerald-400">
-                04 // HASIL PENGUJIAN &amp; VERIFIKASI
+                04 // HASIL PENGUJIAN &amp; SPESIFIKASI PQC
               </span>
               <h2 className="mt-1.5 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
                 105 Pemeriksaan Otomatis Lulus
@@ -293,10 +295,10 @@ export default function HomePage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-8">
               <span className="font-mono text-xs font-semibold uppercase tracking-widest text-emerald-400">
-                05 // PENERAPAN &amp; STACK TEKNOLOGI
+                05 // KAPABILITAS &amp; STACK TEKNOLOGI
               </span>
               <h2 className="mt-1.5 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
-                Operasi Lapangan, Organisasi &amp; Infrastruktur Kritis
+                Operasi Lapangan, Konsol Organisasi &amp; Audit PQC
               </h2>
             </div>
 
@@ -309,9 +311,9 @@ export default function HomePage() {
                   <span className="font-mono text-xs font-bold text-emerald-400">OPERASI TAKTIS &amp; ORGANISASI</span>
                 </div>
                 <ul className="mt-4 space-y-2 text-sm text-slate-300">
-                  <li>• Komunikasi personel lapangan terisolasi per organisasi (<em>no cross-org</em>)</li>
-                  <li>• Sinkronisasi offline outbox &amp; relai WebSocket untuk area sinyal lemah</li>
-                  <li>• Pengesahan instruksi komando &amp; firmware OT/IoT via <strong>PERISAI-Sign</strong></li>
+                  <li>• Obrolan personal &amp; grup terisolasi per organisasi dengan rotasi <code>key_epoch</code></li>
+                  <li>• Sinkronisasi antrean pesan offline (<em>queuedOutbox</em>) &amp; relai WebSocket real-time</li>
+                  <li>• Brankas lokal <strong>PERISAI-Vault</strong> dengan enkripsi ML-KEM + AES-256-GCM</li>
                 </ul>
               </article>
 
@@ -320,12 +322,12 @@ export default function HomePage() {
                   <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-sky-400/35 bg-sky-500/10 text-sky-400">
                     <FactoryGridIcon className="h-5 w-5" />
                   </span>
-                  <span className="font-mono text-xs font-bold text-sky-400">AUDIT KUANTUM &amp; INFRASTRUKTUR</span>
+                  <span className="font-mono text-xs font-bold text-sky-400">OTENTIKASI KOMANDO &amp; AUDIT</span>
                 </div>
                 <ul className="mt-4 space-y-2 text-sm text-slate-300">
-                  <li>• Uji kesiapan kriptografi lokal &amp; simulasi Shor RSA lewat <strong>PERISAI-Lab</strong></li>
-                  <li>• Penyimpanan file &amp; ciphertext terenkripsi pada <strong>SeaweedFS S3</strong></li>
-                  <li>• Roadmap Tier 3 <strong>AEGIS-GUARD</strong> untuk perlindungan biner &amp; DFIR</li>
+                  <li>• Penandatanganan <code>command_instruction</code>, <code>firmware_package</code>, &amp; <code>field_report</code></li>
+                  <li>• Enkripsi file per-agen atau per-grup menggunakan kunci publik <strong>ML-KEM</strong></li>
+                  <li>• Pemindaian kesiapan armada &amp; matriks kerentanan algoritma warisan di <strong>PERISAI-Lab</strong></li>
                 </ul>
               </article>
             </div>
@@ -338,7 +340,7 @@ export default function HomePage() {
                 <div>
                   <span className="font-mono text-[11px] font-bold text-emerald-400">CLIENT &amp; CONSOLE</span>
                   <p className="mt-0.5 text-sm font-semibold text-white">Flutter 3.x &amp; Static SPA</p>
-                  <p className="text-xs text-slate-400">Android, Web, Desktop + organization_web</p>
+                  <p className="text-xs text-slate-400">flutter_application_chat + organization_web</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -346,9 +348,9 @@ export default function HomePage() {
                   <ServerStackIcon className="h-4 w-4" />
                 </span>
                 <div>
-                  <span className="font-mono text-[11px] font-bold text-emerald-400">BACKEND &amp; DATA</span>
-                  <p className="mt-0.5 text-sm font-semibold text-white">FastAPI + PostgreSQL 16 + SeaweedFS</p>
-                  <p className="text-xs text-slate-400">Dikemas via Docker Compose</p>
+                  <span className="font-mono text-[11px] font-bold text-emerald-400">PYTHON BACKEND &amp; DATA</span>
+                  <p className="mt-0.5 text-sm font-semibold text-white">Python 3.12 (FastAPI + Uvicorn)</p>
+                  <p className="text-xs text-slate-400">PostgreSQL 16 + SeaweedFS via Docker Compose</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -374,7 +376,7 @@ export default function HomePage() {
                   06 // UNDUH KOMPONEN RUDALPPK
                 </span>
                 <h2 className="mt-1.5 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
-                  Unduh Aplikasi Klien, Konsol Web &amp; Backend
+                  Unduh Aplikasi Klien, Konsol Web &amp; Backend Python
                 </h2>
               </div>
 

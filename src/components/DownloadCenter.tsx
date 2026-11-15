@@ -3,7 +3,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import {
   ConsoleAdminIcon,
-  CpuBinaryIcon,
+  LockQuantumIcon,
   ServerStackIcon,
   ShieldCheckIcon,
   SmartphoneIcon,
@@ -18,9 +18,9 @@ interface DownloadCenterProps {
 
 const PLATFORM_ICONS: Record<PlatformId, ReactNode> = {
   "field-client": <SmartphoneIcon className="h-5 w-5" />,
+  "field-web": <LockQuantumIcon className="h-5 w-5" />,
   "org-console": <ConsoleAdminIcon className="h-5 w-5" />,
   "pqc-backend": <ServerStackIcon className="h-5 w-5" />,
-  "aegis-tier3": <CpuBinaryIcon className="h-5 w-5" />,
 };
 
 export function DownloadCenter({

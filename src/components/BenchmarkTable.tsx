@@ -2,16 +2,16 @@
 
 import { useState, type ReactNode } from "react";
 import {
-  CpuBinaryIcon,
   KeyEpochIcon,
   LockQuantumIcon,
+  RadarPulseIcon,
   ServerStackIcon,
   ShieldCheckIcon,
   SmartphoneIcon,
 } from "@/components/Icons";
 import { BENCHMARKS } from "@/data/rudalppk";
 
-type FilterCat = "all" | "verified" | "pqc" | "tier3";
+type FilterCat = "all" | "verified" | "pqc" | "matrix";
 
 const KPI_HIGHLIGHTS: {
   value: string;
@@ -23,7 +23,7 @@ const KPI_HIGHLIGHTS: {
   {
     value: "105 / 105",
     label: "Total Uji Otomatis Lulus",
-    sub: "87 backend (pqcrypto aktif) + 18 Flutter test",
+    sub: "87 Python backend + 18 Flutter test",
     accent: "text-emerald-400",
     icon: <ShieldCheckIcon className="h-5 w-5 text-emerald-400" />,
   },
@@ -36,7 +36,7 @@ const KPI_HIGHLIGHTS: {
   },
   {
     value: "27 / 27",
-    label: "Uji Platform Terpadu",
+    label: "Uji Platform SAD v2.0",
     sub: "test_full_platform.py (FastAPI + PG + S3)",
     accent: "text-emerald-400",
     icon: <ServerStackIcon className="h-5 w-5 text-emerald-400" />,
@@ -44,23 +44,23 @@ const KPI_HIGHLIGHTS: {
   {
     value: "18 / 18",
     label: "Uji Klien Flutter",
-    sub: "flutter_application_chat (UI & crypto)",
+    sub: "flutter_application_chat (Envelope v2 & UI)",
     accent: "text-sky-400",
     icon: <SmartphoneIcon className="h-5 w-5 text-sky-400" />,
   },
   {
     value: "11 / 11",
     label: "Uji Alur Autentikasi",
-    sub: "test_auth_flow.py (Ed25519 + JWT)",
+    sub: "test_auth_flow.py (Ed25519 + 1-Time Code)",
     accent: "text-emerald-400",
     icon: <KeyEpochIcon className="h-5 w-5 text-emerald-400" />,
   },
   {
-    value: "Tier 3 Spec",
-    label: "AEGIS-GUARD DFIR",
-    sub: "AES-256-GCM • BLAKE3 + SHA-256 • Reed-Solomon",
+    value: "FIPS 203/204",
+    label: "ML-KEM & ML-DSA",
+    sub: "Kategori NIST 1–5 (custom | pqcrypto 1.0)",
     accent: "text-sky-400",
-    icon: <CpuBinaryIcon className="h-5 w-5 text-sky-400" />,
+    icon: <RadarPulseIcon className="h-5 w-5 text-sky-400" />,
   },
 ];
 
@@ -96,11 +96,11 @@ export function BenchmarkTable() {
           onClick={() => setShowTable((prev) => !prev)}
           className="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/80 px-4 py-2.5 text-xs font-semibold text-slate-200 transition hover:border-emerald-400/50 hover:text-emerald-300"
         >
-          <span>{showTable ? "Sembunyikan Rincian Verifikasi" : "Lihat Rincian 8 Verifikasi & Target"}</span>
+          <span>{showTable ? "Sembunyikan Rincian Verifikasi" : "Lihat Rincian 8 Suite Uji & Spesifikasi PQC"}</span>
           <span aria-hidden="true">{showTable ? "↑" : "↓"}</span>
         </button>
         <span className="hidden font-mono text-xs text-slate-400 sm:inline">
-          Sumber: Documentation_and_Report/README[2026-11-13,1].md
+          Sumber: Documentation_and_Report/README[2026-11-13,1].md &amp; app/core/pqc.py
         </span>
       </div>
 
@@ -110,9 +110,9 @@ export function BenchmarkTable() {
             {(
               [
                 { id: "all", label: "Semua (8)" },
-                { id: "verified", label: "Suite Terverifikasi (105)" },
-                { id: "pqc", label: "Modul PERISAI-Q" },
-                { id: "tier3", label: "Target Tier 3 AEGIS" },
+                { id: "verified", label: "Suite Otomatis (105 Checks)" },
+                { id: "pqc", label: "Spesifikasi ML-KEM & ML-DSA" },
+                { id: "matrix", label: "PERISAI-Lab & Audit" },
               ] as const
             ).map((item) => (
               <button
@@ -135,9 +135,9 @@ export function BenchmarkTable() {
               <thead>
                 <tr className="border-b border-slate-800 bg-slate-900/70 font-mono text-[11px] uppercase tracking-wider text-slate-400">
                   <th className="px-4 py-3">Parameter</th>
-                  <th className="px-4 py-3">Komponen</th>
-                  <th className="px-4 py-3">Metode Uji / Sumber</th>
-                  <th className="px-4 py-3">Status &amp; Hasil</th>
+                  <th className="px-4 py-3">Komponen / Endpoint</th>
+                  <th className="px-4 py-3">Cakupan Uji</th>
+                  <th className="px-4 py-3">Hasil &amp; Spesifikasi</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800/70">

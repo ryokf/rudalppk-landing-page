@@ -1,8 +1,8 @@
 export type PlatformId =
   | "field-client"
+  | "field-web"
   | "org-console"
-  | "pqc-backend"
-  | "aegis-tier3";
+  | "pqc-backend";
 
 export interface ReleasePackage {
   id: PlatformId;
@@ -27,50 +27,75 @@ export interface ReleasePackage {
 export const RELEASE_PACKAGES: ReleasePackage[] = [
   {
     id: "field-client",
-    tabLabel: "Field Client (Flutter)",
-    tabSub: "Android, Web & Desktop Agen",
-    title: "Secure Field Comms — Flutter Client (v1.0.0+1)",
-    shortName: "Field Client",
-    archBadge: "Flutter 3.x • Android / Web / Linux",
-    osSupport: "flutter_application_chat • cryptography 2.7 • WebSocket",
+    tabLabel: "Flutter Field Client",
+    tabSub: "Source Code (Android, Web & Desktop)",
+    title: "Secure Field Comms — Flutter Client Source (v1.0.0+1)",
+    shortName: "Flutter Source",
+    archBadge: "Flutter 3.x • Dart ^3.13.7 • cryptography 2.7",
+    osSupport: "Android, Web, Desktop (MobileApp_and_Web/flutter_application_chat)",
     description:
-      "Aplikasi komunikasi taktis untuk agen lapangan: aktivasi kode sekali pakai + 12-word recovery phrase, autentikasi perangkat Ed25519, E2EE personal & grup (X25519 + HKDF-SHA256, key_epoch), antrean offline, serta tab PERISAI-Vault, PERISAI-Sign, dan PERISAI-Lab.",
+      "Kode sumber lengkap aplikasi agen lapangan Flutter dengan 4 tab utama (Personal, Grup, PERISAI-Q, Profil), enkripsi hibrida Envelope v2 (X25519 + ML-KEM + AES-256-GCM), autentikasi Ed25519 + ML-DSA, serta 12-word recovery phrase.",
     filename: "rudalppk-field-client-v1.0.0.tar.gz",
     href: "/downloads/rudalppk-field-client-v1.0.0.tar.gz",
-    bundleSize: "10,8 KB (.tar.gz bundle)",
-    binaryFootprint: "v1.0.0+1 • 18/18 Flutter Tests",
-    minSpec: "Flutter SDK 3.x / Android / Browser Modern",
-    sha256: "62070ead1300d4e7fe8c0e4da77127037eec120405308ac715f1f9a09729b337",
+    bundleSize: "99,2 KB (.tar.gz source)",
+    binaryFootprint: "18 / 18 Flutter Tests Lulus",
+    minSpec: "Flutter SDK 3.x (Dart ^3.13.7)",
+    sha256: "96e2e4c31853486f98d32382f4d95fbaba690d3f7aeb44a9634e934d16e56f4f",
     recommended: true,
     includedModules: [
-      "Aktivasi akun 1-time code + 12-word recovery phrase lokal",
-      "Chat Personal & Grup E2EE (X25519 + HKDF-SHA256 + key_epoch)",
-      "Modul PERISAI-Q terintegrasi: Vault, Sign & Lab (perisai_agent_bridge.js)",
+      "4 Tab Utama: Personal, Grup (key_epoch), PERISAI-Q, & Profil",
+      "Sub-tab PERISAI-Vault, PERISAI-Sign (ML-DSA), & PERISAI-Lab",
+      "Hybrid Envelope v2 (X25519 || ML-KEM -> HKDF-SHA256 -> AES-256-GCM)",
     ],
     cliSnippet: `sha256sum -c SHA256SUMS.txt --ignore-missing
 tar -xzf rudalppk-field-client-v1.0.0.tar.gz
-cd rudalppk-field-client-v1.0.0 && cat DEPLOY.txt`,
+cd rudalppk-field-client-v1.0.0 && flutter pub get && flutter run -d chrome`,
+  },
+  {
+    id: "field-web",
+    tabLabel: "Flutter Web Build",
+    tabSub: "Siap Pakai (Tanpa Flutter SDK)",
+    title: "Secure Field Comms — Precompiled Web Release (v1.0.0+1)",
+    shortName: "Web Release",
+    archBadge: "Compiled JS + perisai_agent_bridge.js",
+    osSupport: "Semua Browser Modern via Static HTTP Server",
+    description:
+      "Hasil kompilasi rilis web (build/web) yang dilengkapi perisai_agent_bridge.js untuk menjalankan PERISAI-Vault, PERISAI-Sign (verifikasi & dekripsi file ML-KEM), serta PERISAI-Lab langsung di browser tanpa instalasi Flutter SDK.",
+    filename: "rudalppk-field-web-release-v1.0.0.tar.gz",
+    href: "/downloads/rudalppk-field-web-release-v1.0.0.tar.gz",
+    bundleSize: "1,02 MB (.tar.gz build/web)",
+    binaryFootprint: "Ready-to-Serve Web Bundle",
+    minSpec: "Python 3 http.server / Nginx",
+    sha256: "84104bd4f49a351a7befc6cd4f11d1cfe18e455904ace7b08038a0b56c8e4f40",
+    includedModules: [
+      "Bundel terkompilasi main.dart.js + flutter_bootstrap.js",
+      "Terintegrasi perisai_agent_bridge.js untuk fitur penuh PERISAI-Q",
+      "Dapat disajikan langsung tanpa perlu menginstal Flutter SDK",
+    ],
+    cliSnippet: `sha256sum -c SHA256SUMS.txt --ignore-missing
+tar -xzf rudalppk-field-web-release-v1.0.0.tar.gz
+cd rudalppk-field-web-release-v1.0.0 && python3 -m http.server 3001`,
   },
   {
     id: "org-console",
     tabLabel: "Org Web Console",
-    tabSub: "Admin Organisasi (Static SPA)",
+    tabSub: "Admin SPA (6 Menu + PERISAI-Q)",
     title: "Organization Web Console — Static Admin SPA (SAD v2.0)",
     shortName: "Org Console",
     archBadge: "Static HTML/CSS/JS • Zero Build Step",
     osSupport: "Browser Modern • Terhubung ke FastAPI /api/v1",
     description:
-      "Konsol web statis independen untuk administrator organisasi: login PBKDF2-HMAC-SHA256, provisioning agen lapangan, penerbitan kode aktivasi sekali pakai (72 jam), pengelolaan grup key_epoch, dan pencabutan perangkat.",
+      "Konsol web statis independen untuk administrator organisasi dengan 6 menu: Pengguna, Grup, Administrator, PERISAI-Sign (ML-DSA-44/65/87 & enkripsi file ML-KEM), PERISAI-Lab (simulator Shor & audit armada), serta Pengaturan.",
     filename: "rudalppk-org-console-v2.0.tar.gz",
     href: "/downloads/rudalppk-org-console-v2.0.tar.gz",
-    bundleSize: "21,9 KB (.tar.gz SPA penuh)",
-    binaryFootprint: "Zero Build • Zero Plaintext Access",
-    minSpec: "Static HTTP Server / Nginx",
-    sha256: "e2760b628c791b412c582452e073d66897cb748a5301beb954e77a6a162461a5",
+    bundleSize: "22,4 KB (.tar.gz SPA penuh)",
+    binaryFootprint: "Zero Build • 6 Modul Admin",
+    minSpec: "Python 3 http.server / Nginx",
+    sha256: "3aff834ad452618ef26c4d3f4fd8232b9cb2f8e1b087425efcacc1f0cb643877",
     includedModules: [
-      "Provisioning user & kode aktivasi 72 jam (hash SHA-256)",
-      "Manajemen grup organisasi dengan rotasi key_epoch otomatis",
-      "Revokasi user & perangkat seketika tanpa akses kunci privat",
+      "Provisioning agen, kode aktivasi 72 jam (SHA-256), & revokasi akses",
+      "PERISAI-Sign: tanda tangan command_instruction, firmware_package, field_report",
+      "PERISAI-Lab: simulasi Shor RSA, benchmark PQC, & Fleet Readiness Audit",
     ],
     cliSnippet: `sha256sum -c SHA256SUMS.txt --ignore-missing
 tar -xzf rudalppk-org-console-v2.0.tar.gz
@@ -78,59 +103,34 @@ cd rudalppk-org-console-v2.0 && python3 -m http.server 8080`,
   },
   {
     id: "pqc-backend",
-    tabLabel: "FastAPI + PQC Stack",
-    tabSub: "Docker Relay & SeaweedFS",
-    title: "FastAPI + PostgreSQL 16 + SeaweedFS & PQC Backend",
-    shortName: "PQC Backend",
-    archBadge: "Python 3.12 • Docker Compose • FIPS 203/204 Option",
-    osSupport: "Linux / Docker Compose (api, db, storage)",
+    tabLabel: "Python Backend",
+    tabSub: "FastAPI + PostgreSQL 16 + SeaweedFS",
+    title: "Python 3.12 (FastAPI) + PostgreSQL 16 + SeaweedFS & PQC",
+    shortName: "Python Backend",
+    archBadge: "Python 3.12 • FastAPI • pqcrypto 1.0.0",
+    osSupport: "Docker Compose (api, db, storage) / Python venv",
     description:
-      "Server relai ciphertext FastAPI dengan PostgreSQL 16 dan SeaweedFS S3. Mendukung PQC_BACKEND=custom (default wire Flutter) maupun PQC_BACKEND=pqcrypto 1.0.0 (PQClean ML-KEM & ML-DSA).",
-    filename: "rudalppk-pqc-backend-v2.0.tar.gz",
-    href: "/downloads/rudalppk-pqc-backend-v2.0.tar.gz",
-    bundleSize: "3,0 KB (.tar.gz config & test)",
-    binaryFootprint: "87/87 Backend Tests Passing",
-    minSpec: "Docker Engine + Docker Compose",
-    sha256: "aa20ab3e4165f6d2910e00dfb652638a4d64b099cd0e055da211a0dea50e10bc",
+      "Kode sumber lengkap backend Python 3.12 (FastAPI + Uvicorn + SQLAlchemy async + Alembic) beserta 14 router API, fasad PQC_BACKEND (custom | pqcrypto), skrip seed_demo.py, dan 3 suite pengujian otomatis (87 checks).",
+    filename: "rudalppk-python-backend-v2.0.tar.gz",
+    href: "/downloads/rudalppk-python-backend-v2.0.tar.gz",
+    bundleSize: "69,9 KB (.tar.gz full backend)",
+    binaryFootprint: "87 / 87 Backend Tests Lulus",
+    minSpec: "Docker Compose / Python 3.12",
+    sha256: "f57373e5ac0e96eb2c41ca0c2cd320b66cc60e08c6a924151c49a942e9c9dd4e",
     includedModules: [
-      "Zero-Knowledge ciphertext relay via REST & WebSocket",
-      "Selectable PQC engine: custom atau pqcrypto (ML-KEM / ML-DSA)",
-      "Suite uji otomatis: test_pqc_backend, test_auth_flow, test_full_platform",
+      "14 Router FastAPI termasuk perisai_sign, perisai_lab, relay, groups, & auth",
+      "Pluggable PQC_BACKEND: custom (ring-LWE n=64, q=3329) atau pqcrypto 1.0.0",
+      "Suite uji lengkap: test_pqc_backend.py (49), test_full_platform.py (27), test_auth_flow.py (11)",
     ],
     cliSnippet: `sha256sum -c SHA256SUMS.txt --ignore-missing
-tar -xzf rudalppk-pqc-backend-v2.0.tar.gz
-cd rudalppk-pqc-backend-v2.0 && docker compose up -d`,
-  },
-  {
-    id: "aegis-tier3",
-    tabLabel: "AEGIS-GUARD Tier 3",
-    tabSub: "Self-Healing DFIR Spec",
-    title: "PERISAI-AEGIS Tier 3 — AEGIS-GUARD DFIR Blueprint",
-    shortName: "AEGIS Tier 3",
-    archBadge: "Rust Builder Spec • AES-256-GCM • Reed-Solomon",
-    osSupport: "Linux x86_64 / ARMv8 (Spesifikasi PRD PA-T3-PRD-001)",
-    description:
-      "Cetak biru dan sampel artefak forensik Tier 3 (SelfRecover): pembungkusan biner AES-256-GCM, pembekuan anomali, penyegelan bukti ISO/IEC 27037 (BLAKE3 + SHA-256), serta rekonstruksi paritas Reed-Solomon GF(2^8).",
-    filename: "perisai-aegis-tier3-v1.0.tar.gz",
-    href: "/downloads/perisai-aegis-tier3-v1.0.tar.gz",
-    bundleSize: "8,6 KB (.tar.gz spec & artefak)",
-    binaryFootprint: "Draft Baseline PRD/SAD Tier 3",
-    minSpec: "Linux Kernel 4.14+ (Target Spesifikasi)",
-    sha256: "05b8157f51e21ee21a7cd05e47bb21538f8270f33e891ec9b2ea5936fb6bb99c",
-    includedModules: [
-      "Dokumen PRD resmi PERISAI-AEGIS Tier 3 (PA-T3-PRD-001)",
-      "Sampel evidence_metadata.json (offset 0x0004F2A0: 0x74 -> 0x75)",
-      "Sampel aturan deteksi rule_generated.yar berstandar ISO/IEC 27037",
-    ],
-    cliSnippet: `sha256sum -c SHA256SUMS.txt --ignore-missing
-tar -xzf perisai-aegis-tier3-v1.0.tar.gz
-cd perisai-aegis-tier3-v1.0 && ls -la`,
+tar -xzf rudalppk-python-backend-v2.0.tar.gz
+cd rudalppk-python-backend-v2.0 && cp .env.example .env && docker compose up --build -d`,
   },
 ];
 
 export interface BenchmarkRow {
   id: string;
-  category: "verified" | "pqc" | "tier3";
+  category: "verified" | "pqc" | "matrix";
   parameter: string;
   component: string;
   method: string;
@@ -145,106 +145,112 @@ export const BENCHMARKS: BenchmarkRow[] = [
     category: "verified",
     parameter: "Suite Kriptografi PQC",
     component: "test_pqc_backend.py",
-    method: "Uji ML-KEM, ML-DSA, simulasi RSA, & audit endpoint (pqcrypto 1.0.0)",
+    method: "Uji ML-KEM-(512/768/1024), ML-DSA-(44/65/87), simulasi RSA, & audit",
     resultBadge: "49 / 49 Lulus",
     resultKind: "ok",
-    detail: "Verifikasi live signature VALID & penolakan artefak yang dimodifikasi.",
+    detail: "Berjalan dengan pqcrypto 1.0.0 aktif; verifikasi tanda tangan VALID & deteksi tamper.",
   },
   {
     id: "platform-suite",
     category: "verified",
-    parameter: "Integrasi Platform Penuh",
+    parameter: "Integrasi Platform SAD v2.0",
     component: "test_full_platform.py",
-    method: "E2E aktivasi, provisioning organisasi, grup key_epoch, & relay",
+    method: "Aktivasi agen, direktori organisasi, grup key_epoch, & WebSocket relay",
     resultBadge: "27 / 27 Lulus",
     resultKind: "ok",
-    detail: "Teruji pada stack FastAPI + PostgreSQL 16 + SeaweedFS.",
+    detail: "Teruji di atas FastAPI + PostgreSQL 16 + SeaweedFS S3.",
   },
   {
     id: "flutter-suite",
     category: "verified",
     parameter: "Klien Lapangan Flutter",
     component: "flutter_application_chat",
-    method: "flutter test & analisis UI/crypto/state klien",
+    method: "flutter analyze & flutter test pada model, crypto_service, & UI",
     resultBadge: "18 / 18 Lulus",
     resultKind: "ok",
-    detail: "Total 105 automated checks lulus di seluruh workspace.",
+    detail: "Mendukung Hybrid Envelope v2 & 12-word BIP-39 recovery phrase.",
   },
   {
     id: "auth-suite",
     category: "verified",
-    parameter: "Autentikasi Perangkat",
+    parameter: "Autentikasi Perangkat & Aktivasi",
     component: "test_auth_flow.py",
-    method: "Challenge/response Ed25519 & validasi device_session JWT",
+    method: "Challenge/response Ed25519, kode aktivasi 72 jam (SHA-256), & revokasi",
     resultBadge: "11 / 11 Lulus",
     resultKind: "ok",
-    detail: "Self-registration dinonaktifkan; aktivasi wajib 1-time code 72 jam.",
+    detail: "Self-registration dinonaktifkan; pencabutan user memutus semua perangkat & sesi.",
   },
   {
-    id: "pqc-modes",
+    id: "kem-specs",
     category: "pqc",
-    parameter: "Dual PQC Backend",
-    component: "pqc_backend.py",
-    method: "Switching PQC_BACKEND=custom vs PQC_BACKEND=pqcrypto",
-    resultBadge: "PQClean FIPS 203/204",
+    parameter: "Spesifikasi NIST FIPS 203",
+    component: "ML-KEM-512 / 768 / 1024",
+    method: "Key encapsulation untuk E2EE chat, grup, & enkripsi file per-agen",
+    resultBadge: "Kategori NIST 1 / 3 / 5",
     resultKind: "metric",
-    detail: "Mode pqcrypto menyediakan ML-KEM & ML-DSA referensi (belum sertifikasi CMVP).",
+    detail: "Ukuran kunci publik 800 / 1184 / 1568 byte; shared secret 32 byte.",
   },
   {
-    id: "vault-sign-lab",
+    id: "dsa-specs",
     category: "pqc",
-    parameter: "PERISAI-Vault / Sign / Lab",
-    component: "perisai_screen.dart",
-    method: "Simulasi serangan Shor pada RSA, skor crypto-agility, & verifikasi tanda tangan",
-    resultBadge: "Aktif di Klien",
+    parameter: "Spesifikasi NIST FIPS 204",
+    component: "ML-DSA-44 / 65 / 87",
+    method: "Penandatanganan command_instruction, firmware_package, & field_report",
+    resultBadge: "Kategori NIST 2 / 3 / 5",
+    resultKind: "metric",
+    detail: "Ukuran signature 2420 / 3309 / 4627 byte; deteksi modifikasi 1-bit.",
+  },
+  {
+    id: "rsa-shor-matrix",
+    category: "matrix",
+    parameter: "Simulasi Serangan Kuantum",
+    component: "POST /perisai/lab/simulate-rsa",
+    method: "Faktorisasi Shor & QUBO pada RSA (N=3233, e=17) vs ML-KEM-768 + ML-DSA-65",
+    resultBadge: "RSA_BROKEN_PQC_SAFE",
     resultKind: "ok",
-    detail: "Tersedia langsung di tab PERISAI-Q pada aplikasi Flutter & bridge web.",
+    detail: "Faktor p=53 & q=61 berhasil ditemukan; skema kisi ML-KEM/DSA tetap aman.",
   },
   {
-    id: "aegis-dfir",
-    category: "tier3",
-    parameter: "Target Isolasi Bukti DFIR",
-    component: "AEGIS-GUARD Tier 3",
-    method: "Deteksi modifikasi byte (0x74 JE → 0x75 JNE) & segel ISO/IEC 27037",
-    resultBadge: "Target < 5 ms",
+    id: "legacy-audit-matrix",
+    category: "matrix",
+    parameter: "Audit Kesiapan Armada PQC",
+    component: "GET /perisai/lab/audit",
+    method: "Pemindaian perangkat aktif, distribusi algoritma, & persentase Hybrid v2",
+    resultBadge: "Readiness Score %",
     resultKind: "metric",
-    detail: "Menghasilkan evidence_metadata.json, injected_payload.bin, & rule_generated.yar.",
-  },
-  {
-    id: "aegis-rs",
-    category: "tier3",
-    parameter: "Target Pemulihan Biner",
-    component: "Reed-Solomon GF(2^8)",
-    method: "Rekonstruksi paritas biner terenkripsi AES-256-GCM",
-    resultBadge: "Target 14,2 ms",
-    resultKind: "metric",
-    detail: "Spesifikasi arsitektur PA-T3-PRD-001 (tahap baseline desain Tier 3).",
+    detail: "Mendeteksi perangkat legacy-only yang berisiko Harvest-Now-Decrypt-Later.",
   },
 ];
 
-export const EVIDENCE_JSON_PREVIEW = `{
-  "document_id": "PA-T3-PRD-001",
-  "standard": "ISO/IEC 27037",
-  "virtual_memory_offset": "0x0004F2A0",
-  "pre_healing_byte_diff": "0x74 (JE) -> 0x75 (JNE)",
-  "artifacts": [
-    "evidence_metadata.json",
-    "injected_payload.bin",
-    "rule_generated.yar"
-  ],
-  "seals": {
-    "blake3": "7f9c12b4e8d01a49a21e6c54d11800b3",
-    "sha256": "05b8157f51e21ee21a7cd05e47bb21538f8270f33e891ec9b2ea5936fb6bb99c"
+export const SHOR_SIM_JSON_PREVIEW = `{
+  "event_type": "QUANTUM_SIMULATION_RUN",
+  "status": "RSA_BROKEN_PQC_SAFE",
+  "rsa_target": {
+    "modulus_n": 3233,
+    "public_exponent_e": 17,
+    "recovered_factors": [53, 61],
+    "private_d_recovered": 2753,
+    "sample_message": 42,
+    "decrypted_plaintext": 42
+  },
+  "pqc_comparison": {
+    "kem_algorithm": "ML-KEM-768 (NIST FIPS 203)",
+    "dsa_algorithm": "ML-DSA-65 (NIST FIPS 204)",
+    "quantum_resistance": "SAFE_AGAINST_SHOR_AND_GROVER"
   }
 }`;
 
-export const YARA_RULE_PREVIEW = `rule AEGIS_GUARD_Auth_Branch_Tamper {
-    meta:
-        source = "PA-T3-PRD-001 (SelfRecover)"
-        standard = "ISO/IEC 27037"
-        integrity_seal = "BLAKE3 + SHA-256"
-    strings:
-        $offset_0004F2A0_patch = { 75 ?? ?? ?? }
-    condition:
-        $offset_0004F2A0_patch
+export const SIGN_VERIFY_JSON_PREVIEW = `{
+  "endpoint": "POST /api/v1/perisai/sign/verify",
+  "artifact_type": "command_instruction",
+  "title": "Perintah Pergeseran Frekuensi Relai Sektor Utara",
+  "classification": "RAHASIA",
+  "algorithm": "ML-DSA-65",
+  "kem_algorithm": "ML-KEM-768",
+  "recipient_scope": "group",
+  "verification": {
+    "valid": true,
+    "status": "VALID",
+    "content_hash_sha256": "8f3c91d2e7a40519c6b12f90e84d3a7c119e5b24d07a6c83f120e49b7d6c5a21"
+  }
 }`;

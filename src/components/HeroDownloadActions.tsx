@@ -63,7 +63,7 @@ export function HeroDownloadActions() {
           <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4 text-sky-400" aria-hidden="true">
             <path d="M6 4l10 6-10 6V4z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
           </svg>
-          <span>Simulasi Tier 3 DFIR</span>
+          <span>Simulasi PERISAI-Lab &amp; Sign</span>
         </a>
       </div>
 

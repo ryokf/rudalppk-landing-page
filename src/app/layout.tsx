@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "RUDALPPK — Komunikasi Taktis Pasca-Kuantum & Pertahanan Biner Capture-Then-Heal",
+  title: "RUDALPPK — Secure Field Communication (SAD v2.0) & PERISAI-Q Post-Quantum Cryptosuite",
   description:
-    "RUDALPPK (Kartika Cyber Hackathon 2026) — Sistem terpadu PERISAI-AEGIS: Field Comms Engine Zero-PII, Kriptografi Pasca-Kuantum PERISAI-Q (X25519 + ML-KEM & ML-DSA), serta Resiliensi Biner Aegis-Guard Capture-Then-Heal.",
+    "RUDALPPK (Kartika Cyber Hackathon 2026) — Platform komunikasi lapangan E2EE hibrida pasca-kuantum (X25519 + ML-KEM & Ed25519 + ML-DSA) dengan Flutter Field Client, Organization Web Console, dan Backend Python 3.12 (FastAPI).",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

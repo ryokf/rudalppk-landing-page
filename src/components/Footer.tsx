@@ -12,7 +12,7 @@ export function Footer() {
             </strong>
           </div>
           <p className="mt-1.5 text-xs text-slate-400">
-            Sistem Terpadu PERISAI-AEGIS: Field Comms Engine • PERISAI-Q Cryptosuite &amp; Audit Lab • Aegis-Guard Framework
+            Secure Field Communication (SAD v2.0) • PERISAI-Q (Vault • Sign • Lab) • Python 3.12 (FastAPI) &amp; Flutter 3.x
           </p>
         </div>
 

@@ -36,7 +36,7 @@ export function Navbar({ currentPath = "/" }: NavbarProps) {
           <span className="flex flex-col leading-tight">
             <span className="text-base font-extrabold tracking-wide text-white">RUDALPPK</span>
             <span className="font-mono text-[11px] tracking-wider text-emerald-400/90">
-              PERISAI-AEGIS • KCH 2026
+              SAD v2.0 • PERISAI-Q
             </span>
           </span>
         </Link>
@@ -49,7 +49,7 @@ export function Navbar({ currentPath = "/" }: NavbarProps) {
             Arsitektur
           </Link>
           <Link href={`${navPrefix}#simulasi`} className="transition hover:text-white">
-            Simulasi DFIR
+            Simulasi PQC
           </Link>
           <Link href={`${navPrefix}#benchmark`} className="transition hover:text-white">
             Tolok Ukur
@@ -131,10 +131,10 @@ export function Navbar({ currentPath = "/" }: NavbarProps) {
               Latar Belakang
             </Link>
             <Link href={`${navPrefix}#arsitektur`} onClick={() => setOpen(false)} className="py-1 hover:text-white">
-              Arsitektur PERISAI-AEGIS
+              Arsitektur Sistem
             </Link>
             <Link href={`${navPrefix}#simulasi`} onClick={() => setOpen(false)} className="py-1 hover:text-white">
-              Simulasi Capture-Then-Heal
+              Simulasi PERISAI-Q
             </Link>
             <Link href={`${navPrefix}#benchmark`} onClick={() => setOpen(false)} className="py-1 hover:text-white">
               Tolok Ukur Kinerja
