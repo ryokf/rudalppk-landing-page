@@ -17,14 +17,15 @@ interface DownloadCenterProps {
 }
 
 const PLATFORM_ICONS: Record<PlatformId, ReactNode> = {
+  "full-project": <ServerStackIcon className="h-5 w-5" />,
   "field-client": <SmartphoneIcon className="h-5 w-5" />,
   "field-web": <LockQuantumIcon className="h-5 w-5" />,
   "org-console": <ConsoleAdminIcon className="h-5 w-5" />,
-  "pqc-backend": <ServerStackIcon className="h-5 w-5" />,
+  "pqc-backend": <TerminalIcon className="h-5 w-5" />,
 };
 
 export function DownloadCenter({
-  initialPlatform = "field-client",
+  initialPlatform = "full-project",
   compact = false,
 }: DownloadCenterProps) {
   const [selectedId, setSelectedId] = useState<PlatformId>(initialPlatform);
@@ -53,7 +54,7 @@ export function DownloadCenter({
   return (
     <div className="space-y-6">
       <div
-        className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4"
+        className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5"
         role="tablist"
         aria-label="Pilih komponen atau paket rilis RUDALPPK"
       >
@@ -177,8 +178,31 @@ export function DownloadCenter({
                     strokeLinejoin="round"
                   />
                 </svg>
-                <span>Unduh {activePkg.filename}</span>
+                <span>
+                  {activePkg.id === "full-project"
+                    ? "Unduh Proyek (.ZIP)"
+                    : `Unduh ${activePkg.filename}`}
+                </span>
               </a>
+
+              {activePkg.id === "full-project" && (
+                <a
+                  href="/downloads/rudalppk-full-project-v2.0.tar.gz"
+                  download="rudalppk-full-project-v2.0.tar.gz"
+                  className="inline-flex items-center gap-2.5 rounded-xl border border-emerald-400/50 bg-emerald-500/10 px-4 py-3 text-sm font-bold text-emerald-300 transition hover:bg-emerald-500/20"
+                >
+                  <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" aria-hidden="true">
+                    <path
+                      d="M10 2.5v10m0 0l-4-4m4 4l4-4M3.5 16h13"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <span>Unduh Format .TAR.GZ</span>
+                </a>
+              )}
 
               <a
                 href="/downloads/SHA256SUMS.txt"

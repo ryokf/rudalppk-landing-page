@@ -42,9 +42,8 @@ export default function HomePage() {
                 <span>SECURE FIELD COMMS (SAD v2.0) • PERISAI-Q CRYPTOSUITE</span>
               </div>
 
-              <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-5xl sm:leading-[1.12]">
-                Komunikasi Lapangan <span className="text-emerald-400">Hibrida Pasca-Kuantum</span> &amp; Otentikasi
-                Komando <span className="bg-gradient-to-r from-emerald-300 to-sky-400 bg-clip-text text-transparent">PERISAI-Q</span>
+              <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl">
+                RUDALPPK
               </h1>
 
               <p className="max-w-xl text-base leading-relaxed text-slate-300">
@@ -395,7 +394,7 @@ export default function HomePage() {
                   07 // UNDUH KOMPONEN RUDALPPK
                 </span>
                 <h2 className="mt-1.5 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
-                  Unduh Aplikasi Klien, Konsol Web &amp; Backend Python
+                  Unduh Proyek Lengkap RUDALPPK, Konsol Web &amp; Backend Python
                 </h2>
               </div>
 

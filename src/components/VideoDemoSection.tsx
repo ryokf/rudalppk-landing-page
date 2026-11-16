@@ -19,7 +19,7 @@ function extractYouTubeId(input: string): string {
     }
   }
 
-  return "AQDCe585Lnc";
+  return "gR8LXbpmHdE";
 }
 
 export function VideoDemoSection() {

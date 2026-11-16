@@ -33,9 +33,9 @@ export function HeroDownloadActions() {
             />
           </svg>
           <span className="flex flex-col text-left leading-tight">
-            <strong className="text-sm font-extrabold sm:text-base">Unduh Field Client v1.0.0</strong>
+            <strong className="text-sm font-extrabold sm:text-base">Unduh Proyek RUDALPPK (.ZIP)</strong>
             <span className="font-mono text-[11px] font-semibold text-slate-900/80">
-              Flutter (Android / Web) • PERISAI-Q + E2EE
+              Repositori Lengkap (Backend • Web • Flutter • Docs)
             </span>
           </span>
         </a>
@@ -44,7 +44,7 @@ export function HeroDownloadActions() {
           href="/download"
           className="inline-flex items-center gap-2.5 rounded-xl border border-emerald-400/35 bg-emerald-500/10 px-5 py-3.5 text-sm font-bold text-emerald-300 transition hover:border-emerald-400/60 hover:bg-emerald-500/15"
         >
-          <span>Semua Paket &amp; Backend</span>
+          <span>Pilihan Paket &amp; .TAR.GZ</span>
           <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" aria-hidden="true">
             <path
               d="M7 5l6 5-6 5"

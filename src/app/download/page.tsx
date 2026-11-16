@@ -44,8 +44,8 @@ export default function DownloadPage() {
                   Unduh Paket Aplikasi RUDALPPK
                 </h1>
                 <p className="mt-3 text-sm leading-relaxed text-slate-300 sm:text-base">
-                  Pilih komponen yang Anda butuhkan: kode sumber Flutter Field Client, rilis web siap pakai
-                  (<code>build/web</code>), konsol admin web statis, atau backend Python 3.12 (FastAPI + PostgreSQL + SeaweedFS).
+                  Pilih paket yang Anda butuhkan: repositori lengkap RUDALPPK (<code>.zip</code> / <code>.tar.gz</code>),
+                  backend Python 3.12 (FastAPI + PostgreSQL + SeaweedFS), konsol admin web statis, atau klien agen lapangan Flutter.
                 </p>
               </div>
 
